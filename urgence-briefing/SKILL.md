@@ -8,16 +8,18 @@ description: |
   **Déclencher** quand l'utilisateur parle de : briefing d'urgence, situation complète, rapport de crise, évaluation globale, situation générale sur la zone, tous les risques, synthèse d'urgence, bilan de situation, état des lieux urgence, que se passe-t-il sur cette zone.
 
 allowed-tools:
-  - Bash(python3 ../urgence-meteo/main.py*)
-  - Bash(python3 ../urgence-demographie/main.py*)
-  - Bash(python3 ../urgence-hopitaux/main.py*)
-  - Bash(python3 ../urgence-reseaux/main.py*)
-  - Bash(python3 ../urgence-risques-industriels/main.py*)
-  - Bash(python ../urgence-meteo/main.py*)
-  - Bash(python ../urgence-demographie/main.py*)
-  - Bash(python ../urgence-hopitaux/main.py*)
-  - Bash(python ../urgence-reseaux/main.py*)
-  - Bash(python ../urgence-risques-industriels/main.py*)
+  - Bash(python3 *urgence-meteo*main.py*)
+  - Bash(python3 *urgence-demographie*main.py*)
+  - Bash(python3 *urgence-hopitaux*main.py*)
+  - Bash(python3 *urgence-reseaux*main.py*)
+  - Bash(python3 *urgence-risques*main.py*)
+  - Bash(python *urgence-meteo*main.py*)
+  - Bash(python *urgence-demographie*main.py*)
+  - Bash(python *urgence-hopitaux*main.py*)
+  - Bash(python *urgence-reseaux*main.py*)
+  - Bash(python *urgence-risques*main.py*)
+  - Bash(ls ~/.claude/skills*)
+  - Bash(find ~/.claude/skills*)
 ---
 
 # Workflow d'agents — Briefing Urgence
@@ -158,13 +160,24 @@ Après avoir collecté et analysé tous les résultats, produit un rapport struc
 
 ---
 
-## Note sur les chemins des scripts
+## Chemins des scripts
 
-Les scripts sont dans le répertoire parent, un niveau au-dessus de ce skill :
-- `../urgence-meteo/main.py`
-- `../urgence-demographie/main.py`
-- `../urgence-hopitaux/main.py`
-- `../urgence-reseaux/main.py`
-- `../urgence-risques-industriels/main.py`
+Les skills sont installés dans `~/.claude/skills/`. Utilise toujours les chemins absolus :
 
-Utilise `python3` (ou `python` sur Windows).
+```
+python3 ~/.claude/skills/urgence-meteo/main.py --dept <num>
+python3 ~/.claude/skills/urgence-demographie/main.py --lat <lat> --lon <lon> --rayon <km>
+python3 ~/.claude/skills/urgence-hopitaux/main.py --lat <lat> --lon <lon> --specialite <spec>
+python3 ~/.claude/skills/urgence-reseaux/main.py --lat <lat> --lon <lon>
+python3 ~/.claude/skills/urgence-risques-industriels/main.py --lat <lat> --lon <lon> --rayon <km>
+```
+
+Si `~` ne se résout pas (Windows PowerShell natif), utilise `$HOME` ou `$env:USERPROFILE` :
+```
+python $HOME/.claude/skills/urgence-meteo/main.py --dept <num>
+```
+
+En cas de doute sur l'emplacement exact, localise les scripts avec :
+```bash
+ls ~/.claude/skills/urgence-*/main.py
+```
