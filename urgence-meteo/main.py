@@ -66,6 +66,69 @@ DEPT_INFO = {
 }
 
 
+MF_VIGILANCE_API = "https://vigilance.meteofrance.fr/api/V0.1/vigilance?lang=fr"
+
+MF_COLORS = {1: "VERT", 2: "JAUNE", 3: "ORANGE", 4: "ROUGE"}
+MF_COLOR_ICONS = {"VERT": "🟢", "JAUNE": "🟡", "ORANGE": "🟠", "ROUGE": "🔴"}
+MF_PHENOMENA = {
+    1: "Vent violent", 2: "Pluie-inondation", 3: "Orage",
+    4: "Inondation", 5: "Neige-verglas", 6: "Canicule",
+    7: "Grand froid", 8: "Avalanche", 9: "Vagues-submersion",
+}
+MF_RECS = {
+    "VERT":   "Conditions normales.",
+    "JAUNE":  "Soyez attentifs, phenomenes habituellement sans gravite.",
+    "ORANGE": "Soyez tres vigilants. Risques importants pour personnes et biens.",
+    "ROUGE":  "Vigilance absolue. Phenomene d'intensite exceptionnelle, menace directe.",
+}
+
+
+def get_mf_vigilance(dept_key):
+    """Try Météo-France official vigilance API. Returns list of (level, phenomenon, detail) or None."""
+    req = urllib.request.Request(
+        MF_VIGILANCE_API,
+        headers={"User-Agent": "urgence-meteo/1.0", "Accept": "application/json"},
+    )
+    with urllib.request.urlopen(req, timeout=8) as resp:
+        data = json.loads(resp.read())
+
+    # Normalize dept_key to int for matching
+    try:
+        dept_int = int(dept_key)
+    except ValueError:
+        dept_int = None
+
+    alerts = []
+    product = data.get("product", data)
+
+    # Walk all known response shapes
+    for period_key in ("periods", "timelaps", "phenomenons_items"):
+        items = product.get(period_key, [])
+        if not items:
+            continue
+        for item in items:
+            # Shape A: timelaps array with per-dept color
+            massif_id = item.get("massif_id") or item.get("id") or item.get("dep_id")
+            color_id = item.get("phenomenon_max_color_id") or item.get("color_id") or item.get("colorId")
+            phenom_id = item.get("phenomenon_id") or item.get("phenomenonId")
+
+            try:
+                mid = int(str(massif_id).lstrip("0") or "0")
+            except (ValueError, TypeError):
+                mid = None
+
+            if dept_int is not None and mid != dept_int:
+                continue
+
+            level = MF_COLORS.get(int(color_id), "VERT") if color_id else "VERT"
+            if level in ("JAUNE", "ORANGE", "ROUGE"):
+                phenom = MF_PHENOMENA.get(int(phenom_id), "Phenomene meteo") if phenom_id else "Phenomene meteo"
+                detail = MF_RECS.get(level, "")
+                alerts.append((level, phenom, detail))
+
+    return alerts if alerts else None
+
+
 def get_weather(lat, lon):
     params = urllib.parse.urlencode({
         "latitude": lat,
@@ -208,7 +271,37 @@ def main():
             sys.exit(1)
 
     dept_name, lat, lon = DEPT_INFO[dept_key]
+    ts = datetime.now().strftime("%d/%m/%Y %H:%M")
 
+    # Try Météo-France official vigilance first
+    mf_alerts = None
+    try:
+        mf_alerts = get_mf_vigilance(dept_key)
+    except Exception:
+        pass
+
+    if mf_alerts is not None:
+        # Official MF data available — format directly
+        lines = [
+            f"## Vigilance Meteo — {dept_name} (Dep. {dept_key})",
+            f"*Source : **Météo-France Officiel** · {ts}*\n",
+        ]
+        if not mf_alerts:
+            lines.append("### ✅ VERT — Pas de vigilance particuliere")
+            lines.append("Aucune alerte active sur ce departement.")
+        else:
+            priority = {"ROUGE": 0, "ORANGE": 1, "JAUNE": 2}
+            sorted_alerts = sorted(mf_alerts, key=lambda a: priority.get(a[0], 9))
+            lines.append("### ⚠️ Alertes actives (source officielle)\n")
+            lines.append("| Niveau | Phenomene | Detail |")
+            lines.append("|--------|-----------|--------|")
+            for level, phenom, detail in sorted_alerts:
+                icon = MF_COLOR_ICONS.get(level, "")
+                lines.append(f"| **{icon} {level}** | {phenom} | {detail} |")
+        print("\n".join(lines))
+        return
+
+    # Fallback: Open-Meteo with threshold analysis
     try:
         data = get_weather(lat, lon)
     except Exception as e:
@@ -218,7 +311,6 @@ def main():
 
     try:
         alerts, metrics = compute_alerts(data)
-        ts = datetime.now().strftime("%d/%m/%Y %H:%M")
         print(format_output(dept_key, dept_name, alerts, metrics, ts))
     except Exception as e:
         print(f"Erreur : Analyse meteorologique impossible. {e}")
