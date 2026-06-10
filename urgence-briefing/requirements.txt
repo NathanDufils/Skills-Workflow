@@ -1,0 +1,4 @@
+# urgence-briefing — aucune dependance externe requise
+# Utilise uniquement la bibliotheque standard Python (subprocess, concurrent.futures, urllib)
+# Requiert les autres skills urgence-* installes dans le meme repertoire parent
+# Compatible Python 3.8+

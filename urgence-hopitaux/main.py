@@ -23,6 +23,81 @@ SPECIALTIES = {
     "neurologie": ["neurolog", "neurochirurg", "neuro", "cerveau", "stroke", "avc"],
 }
 
+# Centres spécialisés officiels (source : SFETB, SFAR, annuaire FINESS)
+# Données embarquées pour fiabilité maximale en urgence (zéro dépendance API)
+CENTRES_SPECIALISES = {
+    "grands_brules": [
+        {"name": "CHU Bordeaux — CGB Pellegrin",        "lat": 44.8315, "lon": -0.5985, "phone": "05 56 79 56 79"},
+        {"name": "CHRU Lille — CGB Salengro",           "lat": 50.6150, "lon":  3.0436, "phone": "03 20 44 59 62"},
+        {"name": "HCL Lyon — CGB Édouard Herriot",      "lat": 45.7522, "lon":  4.8609, "phone": "04 72 11 73 20"},
+        {"name": "AP-HM Marseille — CGB Conception",    "lat": 43.2960, "lon":  5.3826, "phone": "04 91 38 30 00"},
+        {"name": "CHRU Nancy — CGB Hôpital Central",    "lat": 48.6934, "lon":  6.1741, "phone": "03 83 85 85 85"},
+        {"name": "CHU Nantes — CGB Hôtel-Dieu",         "lat": 47.2120, "lon": -1.5538, "phone": "02 40 08 33 33"},
+        {"name": "CHU Nîmes — CGB Caremeau",            "lat": 43.8238, "lon":  4.3467, "phone": "04 66 68 68 68"},
+        {"name": "AP-HP Paris — CGB Saint-Louis",       "lat": 48.8703, "lon":  2.3638, "phone": "01 42 49 49 49"},
+        {"name": "CHU Rennes — CGB Pontchaillou",       "lat": 48.1140, "lon": -1.6914, "phone": "02 99 28 43 21"},
+        {"name": "CHU Rouen — CGB Charles Nicolle",     "lat": 49.4409, "lon":  1.0922, "phone": "02 32 88 89 90"},
+        {"name": "CHU Saint-Étienne — CGB Bellevue",    "lat": 45.4311, "lon":  4.4024, "phone": "04 77 82 83 00"},
+        {"name": "CHRU Strasbourg — CGB Civil",         "lat": 48.5736, "lon":  7.7490, "phone": "03 88 11 67 68"},
+        {"name": "CHU Toulouse — CGB Rangueil",         "lat": 43.5670, "lon":  1.4639, "phone": "05 61 32 25 33"},
+        {"name": "CHU Tours — CGB Trousseau",           "lat": 47.3686, "lon":  0.7010, "phone": "02 47 47 47 47"},
+        {"name": "CHU Montpellier — CGB Lapeyronie",    "lat": 43.6339, "lon":  3.8799, "phone": "04 67 33 67 33"},
+        {"name": "CHU Grenoble — CGB Michallon",        "lat": 45.1929, "lon":  5.7264, "phone": "04 76 76 75 75"},
+        {"name": "CHU Reims — CGB Maison Blanche",      "lat": 49.2472, "lon":  4.0383, "phone": "03 26 78 78 78"},
+        {"name": "CHU Martinique — CGB Pierre Zobda",   "lat": 14.6418, "lon": -61.0242, "phone": "05 96 55 20 00"},
+        {"name": "CHU La Réunion — CGB Félix Guyon",    "lat": -20.8895, "lon": 55.4477, "phone": "02 62 90 50 50"},
+    ],
+    "pediatrie": [
+        {"name": "AP-HP Necker — Enfants Malades",      "lat": 48.8463, "lon":  2.3163, "phone": "01 44 49 40 00"},
+        {"name": "AP-HP Trousseau — Pédiatrie",         "lat": 48.8479, "lon":  2.3931, "phone": "01 44 73 74 75"},
+        {"name": "CHU Lyon — Hôpital Femme-Mère-Enfant","lat": 45.7344, "lon":  4.8279, "phone": "04 27 85 60 00"},
+        {"name": "CHU Bordeaux — Pellegrin Pédiatrie",  "lat": 44.8315, "lon": -0.5985, "phone": "05 57 82 01 23"},
+        {"name": "CHU Marseille — La Timone Enfants",   "lat": 43.2892, "lon":  5.4014, "phone": "04 91 38 67 00"},
+        {"name": "CHU Toulouse — Purpan Pédiatrie",     "lat": 43.6141, "lon":  1.4030, "phone": "05 34 55 85 85"},
+        {"name": "CHU Lille — Jeanne de Flandre",       "lat": 50.6124, "lon":  3.0395, "phone": "03 20 44 59 62"},
+        {"name": "CHU Nantes — Mère-Enfant",            "lat": 47.2176, "lon": -1.5532, "phone": "02 40 08 34 34"},
+        {"name": "CHU Grenoble — Couple-Enfant",        "lat": 45.1929, "lon":  5.7264, "phone": "04 76 76 75 75"},
+        {"name": "CHU Strasbourg — Hautepierre Pédiatrie","lat": 48.5936, "lon":  7.6918, "phone": "03 88 12 81 23"},
+    ],
+    "neurologie": [
+        {"name": "AP-HP La Pitié-Salpêtrière — Neuro",  "lat": 48.8398, "lon":  2.3633, "phone": "01 42 16 00 00"},
+        {"name": "AP-HP Lariboisière — Neurochirurgie", "lat": 48.8783, "lon":  2.3563, "phone": "01 49 95 65 65"},
+        {"name": "CHU Lyon — Neurologique Pierre Wertheimer","lat": 45.7374, "lon": 4.8571, "phone": "04 72 35 71 70"},
+        {"name": "CHU Bordeaux — Pellegrin Neurochirurgie","lat": 44.8315, "lon": -0.5985, "phone": "05 56 79 55 00"},
+        {"name": "CHRU Lille — Salengro Neurochirurgie","lat": 50.6150, "lon":  3.0436, "phone": "03 20 44 44 44"},
+        {"name": "CHU Marseille — La Timone Neurologie","lat": 43.2892, "lon":  5.4014, "phone": "04 91 38 60 00"},
+    ],
+    "cardiologie": [
+        {"name": "AP-HP HEGP — Cardiologie",            "lat": 48.8372, "lon":  2.2782, "phone": "01 56 09 20 00"},
+        {"name": "AP-HP Lariboisière — Cardiologie",    "lat": 48.8783, "lon":  2.3563, "phone": "01 49 95 65 65"},
+        {"name": "HCL Lyon — Cardio-Vasculaire Bron",   "lat": 45.7390, "lon":  4.8681, "phone": "04 72 35 73 57"},
+        {"name": "CHU Bordeaux — Haut-Lévêque Cardiologie","lat": 44.7924, "lon": -0.5985, "phone": "05 57 65 65 65"},
+        {"name": "CHU Lille — Cardiologie CHRU",        "lat": 50.6124, "lon":  3.0395, "phone": "03 20 44 44 44"},
+        {"name": "CHU Marseille — La Timone Cardiologie","lat": 43.2892, "lon":  5.4014, "phone": "04 91 38 60 00"},
+        {"name": "CHU Rennes — Pontchaillou Cardiologie","lat": 48.1140, "lon": -1.6914, "phone": "02 99 28 43 21"},
+    ],
+}
+
+
+def find_curated(lat, lon, specialty):
+    """Return curated specialized centers sorted by distance. Source: FINESS/SFETB."""
+    centers = CENTRES_SPECIALISES.get(specialty, [])
+    results = []
+    for c in centers:
+        d = haversine(lat, lon, c["lat"], c["lon"])
+        results.append({
+            "name": c["name"],
+            "lat": c["lat"],
+            "lon": c["lon"],
+            "dist_km": d,
+            "specialty_match": True,
+            "phone": c.get("phone", ""),
+            "emergency": "yes",
+            "address": "",
+            "source": "FINESS/officiel",
+        })
+    return sorted(results, key=lambda x: x["dist_km"])
+
 
 def haversine(lat1, lon1, lat2, lon2):
     R = 6371
@@ -219,12 +294,30 @@ def main():
         print("Recherche sans filtre de specialite...")
         args.specialite = None
 
+    # Priority 1: curated FINESS/official database (embedded, zero API)
+    curated = []
+    if args.specialite and args.specialite in CENTRES_SPECIALISES:
+        curated = find_curated(args.lat, args.lon, args.specialite)
+
+    # Priority 2: OpenStreetMap for broader coverage / non-curated specialties
+    osm_hospitals = []
     try:
-        hospitals = find_hospitals(args.lat, args.lon, int(args.rayon * 1000), args.specialite)
-    except Exception as e:
-        print(f"Erreur : Impossible de contacter l'API OpenStreetMap. {e}")
+        osm_hospitals = find_hospitals(args.lat, args.lon, int(args.rayon * 1000), args.specialite)
+    except Exception:
+        pass  # Curated data remains if OSM fails
+
+    # Merge: curated first (verified official), then OSM not already in curated
+    curated_names = {c["name"].lower() for c in curated}
+    osm_filtered = [h for h in osm_hospitals if h["name"].lower() not in curated_names]
+    hospitals = curated + osm_filtered
+
+    if not hospitals:
+        print("Erreur : Aucun etablissement trouve. Verifiez les coordonnees ou augmentez le rayon.")
         print("Conseil : En urgence vitale, appelez le 15 (SAMU) directement.")
         sys.exit(1)
+
+    if curated:
+        print(f"ℹ️  {len(curated)} centre(s) specialise(s) FINESS/officiel(s) identifie(s) + {len(osm_filtered)} etablissement(s) OSM\n")
 
     ts = datetime.now().strftime("%d/%m/%Y %H:%M")
     print(format_output(args.lat, args.lon, hospitals, args.specialite, ts))

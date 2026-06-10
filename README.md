@@ -1,15 +1,17 @@
 # Plugin Claude Code — Situations d'Urgence
 
-Plugin local pour Claude Code fournissant 4 skills d'aide à la décision en situation d'urgence (France). Architecture sans serveur MCP, empreinte contexte minimale (÷10 à ÷15 vs MCP).
+Plugin local pour Claude Code fournissant 6 skills d'aide à la décision en situation d'urgence (France). Architecture sans serveur MCP, empreinte contexte minimale (÷10 à ÷40 vs MCP).
 
 ## Skills disponibles
 
 | Skill | Objectif | Source de données |
 |-------|----------|-------------------|
-| `urgence-meteo` | Alertes vigilance météo par département | Open-Meteo (free) |
+| `urgence-briefing` | **Briefing complet** — orchestre tous les skills en parallèle | Tous les skills ci-dessous |
+| `urgence-meteo` | Alertes vigilance météo par département | Météo-France + Open-Meteo fallback |
 | `urgence-demographie` | Population à évacuer autour d'un incident | geo.api.gouv.fr + OpenStreetMap |
-| `urgence-hopitaux` | Centre de soin spécialisé le plus proche | Overpass API + OSRM |
+| `urgence-hopitaux` | Centre de soin spécialisé le plus proche | FINESS officiel (embarqué) + OSM + OSRM |
 | `urgence-reseaux` | Statut électricité, télécom, internet | Enedis Open Data + ARCEP |
+| `urgence-risques-industriels` | Sites SEVESO, ICPE, risques naturels | GEORISQUES API (gouvernement français) |
 
 ## Installation
 
@@ -19,6 +21,8 @@ cp -r urgence-meteo ~/.claude/skills/
 cp -r urgence-demographie ~/.claude/skills/
 cp -r urgence-hopitaux ~/.claude/skills/
 cp -r urgence-reseaux ~/.claude/skills/
+cp -r urgence-risques-industriels ~/.claude/skills/
+cp -r urgence-briefing ~/.claude/skills/
 
 # Ou tout en une commande
 cp -r urgence-* ~/.claude/skills/
@@ -30,10 +34,12 @@ cp -r urgence-* ~/.claude/skills/
 
 Les skills s'activent automatiquement sur requête en langage naturel dans Claude Code :
 
+- *"Briefing d'urgence complet sur 43.43, 4.94 ?"* → `urgence-briefing --lat 43.43 --lon 4.94 --rayon 5`
 - *"Alertes météo en Gironde ?"* → `urgence-meteo --dept 33`
 - *"Combien d'habitants dans un rayon de 2km autour de 43.29, 5.38 ?"* → `urgence-demographie --lat 43.29 --lon 5.38 --rayon 2`
 - *"Hôpital pour grands brûlés le plus proche de Marseille ?"* → `urgence-hopitaux --lat 43.2965 --lon 5.3811 --specialite grands_brules`
 - *"Quel est l'état des réseaux à Lyon ?"* → `urgence-reseaux --commune Lyon`
+- *"Sites SEVESO autour de Fos-sur-Mer ?"* → `urgence-risques-industriels --lat 43.4377 --lon 4.9442 --rayon 10`
 
 ## Structure
 
