@@ -1,0 +1,3 @@
+# urgence-demographie — aucune dependance externe requise
+# Utilise uniquement la bibliotheque standard Python (urllib, json, math, datetime)
+# Compatible Python 3.8+
