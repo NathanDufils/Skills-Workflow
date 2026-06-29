@@ -41,3 +41,5 @@ pip3 install requests
 - Tableau des communes avec population
 - Sites sensibles (EHPAD, écoles, hôpitaux) depuis OpenStreetMap
 - Évaluation automatique de la priorité d'évacuation
+
+Affiche la sortie du script sans ajouter de texte avant ou après.

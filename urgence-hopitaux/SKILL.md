@@ -36,3 +36,5 @@ allowed-tools:
 
 ### Note urgence vitale
 Toujours rappeler : **15 (SAMU)** ou **112 (secours européens)**
+
+Affiche la sortie du script sans ajouter de texte avant ou après.

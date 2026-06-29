@@ -37,3 +37,5 @@ allowed-tools:
 - 🟠 ÉLEVÉ : Site SEVESO seuil bas ou ICPE autorisation
 - 🟡 MODÉRÉ : ICPE enregistrement/déclaration
 - 🟢 FAIBLE : Aucune installation classée
+
+Affiche la sortie du script sans ajouter de texte avant ou après.

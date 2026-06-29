@@ -37,3 +37,5 @@ allowed-tools:
 
 ### Sortie
 Tableau de statut par réseau (électricité, mobile 4G/3G/2G, internet) + recommandations opérationnelles de coordination.
+
+Affiche la sortie du script sans ajouter de texte avant ou après.

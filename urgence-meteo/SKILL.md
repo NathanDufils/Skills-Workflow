@@ -37,3 +37,5 @@ pip3 install requests
 
 ### Exemple de sortie attendue
 Tableau Markdown avec niveau d'alerte (VERT/JAUNE/ORANGE/ROUGE), phénomène et recommandation opérationnelle.
+
+Affiche la sortie du script sans ajouter de texte avant ou après.
